@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PRODUCTLISTS } from '../mock.product';
 
 @Component({
   selector: 'app-tab1',
@@ -7,8 +6,6 @@ import { PRODUCTLISTS } from '../mock.product';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  
-  productLists = PRODUCTLISTS
 
   constructor() {}
 

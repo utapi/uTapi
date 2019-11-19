@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductList } from '../types';
-import { Products } from '../mock.product';
+import { ProductClass, ProductDetail } from '../types';
+import { ShoppingCartService } from '../shopping-cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -9,19 +9,27 @@ import { Products } from '../mock.product';
 })
 export class ProductListComponent implements OnInit {
 
-  @Input()
-  productLists: ProductList
+  productClass: ProductClass[]
+  totalPrice: Number
   
-  constructor() { }
-
-  changeNumber(ProductID: String, ProductNumber: String) {
-    const Product = Products.find(Product => Product.ProductID === ProductID);
-    console.log(Product)
-
-    console.log({ProductID, ProductNumber})
-  }
+  constructor(private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit() {
+    this.getProductClass();
+  }
+  
+  getProductClass(): void {
+    this.shoppingCartService.getProductClass().subscribe(
+      items => this.productClass = items
+    );
+  }
+  
+  changeNumber(ProductID: String, ProductNumber: Number) {
+    this.shoppingCartService.setShoppingCart(
+      ProductID,
+      ProductNumber
+    )
+    this.totalPrice = this.shoppingCartService.getTotalPrice()
   }
 
 }

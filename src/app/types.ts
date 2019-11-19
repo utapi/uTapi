@@ -4,16 +4,27 @@ export class ProductDetail{
     ProductImg: String
     ProductDesc: String
     ProductPrice: Number
+    ClassID: String
 
     constructor(init?: Partial<ProductDetail>) {
         Object.assign(this, init);
     }
 }
 
-export class ProductList{
+export class ProductClass{
+    ClassID: String
     ClassName: String
-    Products: ProductDetail[]
-    constructor(init?: Partial<ProductList>) {
+    
+    constructor(init?: Partial<ProductClass>) {
+        Object.assign(this, init);
+    }
+}
+
+export class ShoppingCart {
+    ProductID: String
+    ProductNumber: Number
+    
+    constructor(init?: Partial<ShoppingCart>) {
         Object.assign(this, init);
     }
 }

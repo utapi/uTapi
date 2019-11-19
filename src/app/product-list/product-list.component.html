@@ -1,8 +1,8 @@
-<ion-list lines="none" *ngFor="let productList of productLists">
+<ion-list lines="none" *ngFor="let productList of productClass">
     <ion-list-header>
       <ion-label>{{productList.ClassName}}</ion-label>
     </ion-list-header>
-    <ion-item *ngFor="let product of productList.Products">
+    <ion-item *ngFor="let product of shoppingCartService.getProductList(productList.ClassID)">
       <ion-thumbnail slot="start">
           <img src="{{product.ProductImg}}">
         </ion-thumbnail>
@@ -25,3 +25,4 @@
       
     </ion-item>
 </ion-list>
+金額：{{totalPrice}}円
