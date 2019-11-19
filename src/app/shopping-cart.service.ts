@@ -57,7 +57,9 @@ export class ShoppingCartService {
     let totalPrice = 0
     this.shoppingCart.map(item => {
       const product = this.getProductDetailOne(item.ProductID)
-      totalPrice += product.ProductPrice * item.ProductNumber
+      const ProductPrice: any = product.ProductPrice
+      const ProductNumber: any = item.ProductNumber
+      totalPrice += ProductPrice * ProductNumber
     })
     return totalPrice
   }

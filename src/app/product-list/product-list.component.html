@@ -11,7 +11,7 @@
         <p>{{product.ProductDesc}}</p>
 
         <ion-item>
-            <ion-label>\{{product.ProductPrice}}</ion-label>
+            <ion-label>¥{{product.ProductPrice}}円</ion-label>
             <ion-select placeholder="数量選択" (ionChange)="changeNumber(product.ProductID, $event.detail.value)">
               <ion-select-option value="0">0</ion-select-option>
               <ion-select-option value="1">1</ion-select-option>
@@ -25,4 +25,9 @@
       
     </ion-item>
 </ion-list>
-金額：{{totalPrice}}円
+
+<ion-toolbar>
+  <ion-title>
+  　　合計金額：¥{{totalPrice}}円
+  </ion-title>
+</ion-toolbar>

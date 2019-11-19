@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.getProductClass();
+    this.getTotalPrice()
   }
   
   getProductClass(): void {
@@ -24,11 +25,15 @@ export class ProductListComponent implements OnInit {
     );
   }
   
-  changeNumber(ProductID: String, ProductNumber: Number) {
+  changeNumber(ProductID: String, ProductNumber: String) {
     this.shoppingCartService.setShoppingCart(
       ProductID,
-      ProductNumber
+      Number(ProductNumber)
     )
+    this.getTotalPrice()
+  }
+
+  getTotalPrice() {
     this.totalPrice = this.shoppingCartService.getTotalPrice()
   }
 
