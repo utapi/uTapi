@@ -1,0 +1,27 @@
+<ion-list lines="none" *ngFor="let productList of productLists">
+    <ion-list-header>
+      <ion-label>{{productList.ClassName}}</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let product of productList.Products">
+      <ion-thumbnail slot="start">
+          <img src="{{product.ProductImg}}">
+        </ion-thumbnail>
+      <ion-label>
+        <h2>{{product.ProductName}}</h2>
+        <p>{{product.ProductDesc}}</p>
+
+        <ion-item>
+            <ion-label>\{{product.ProductPrice}}</ion-label>
+            <ion-select placeholder="数量選択" (ionChange)="changeNumber(product.ProductID, $event.detail.value)">
+              <ion-select-option value="0">0</ion-select-option>
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+            </ion-select>
+        </ion-item>
+          
+      </ion-label>
+      
+    </ion-item>
+</ion-list>
