@@ -26,8 +26,10 @@ export class SystemService {
     return PRODUCTSDETAIL.find(item => item.ProductID === productID);
   }
 
-  getShoppingCart() {
-    this.shoppingCartCollection = this.angularFirestore.collection<ShoppingCart>('ShoppingCart');
+  async getShoppingCart() {
+    const UserID = await this.getUserID()
+    this.shoppingCartCollection = this.angularFirestore
+    .collection<ShoppingCart>('ShoppingCart', ref => ref.where('UserID', '==', UserID));
     this.shoppingCartCollection.valueChanges().subscribe(
       items => {
         this.shoppingCart = items
@@ -49,7 +51,7 @@ export class SystemService {
   async setShoppingCart(ProductID: String, ProductNumber: Number) {
     const item = this.shoppingCart.find(item => item.ProductID === ProductID)
     const UserID = await this.getUserID()
-    const itemDoc = this.angularFirestore.doc<ShoppingCart>(`ShoppingCart/${UserID}-${ProductID}`)
+    const itemDoc = this.angularFirestore.doc<ShoppingCart>(`ShoppingCart/${UserID}-${ProductID}`, ref => ref.where('size', '==', 'large'))
     // add
     if (!item && ProductNumber > 0) {
       const cart = {ProductID, ProductNumber, UserID}
