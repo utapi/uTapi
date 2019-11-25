@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductClass, ProductDetail } from '../types';
-import { ShoppingCartService } from '../shopping-cart.service';
+import { SystemService } from '../system.service';
 
 @Component({
   selector: 'app-product-list',
@@ -11,30 +11,44 @@ export class ProductListComponent implements OnInit {
 
   productClass: ProductClass[]
   totalPrice: Number
+  totalNumber: Number = 0
   
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(
+    private systemService: SystemService
+  ) { }
 
   ngOnInit() {
     this.getProductClass();
     this.getTotalPrice()
+    this.getTotalNumber()
   }
   
   getProductClass(): void {
-    this.shoppingCartService.getProductClass().subscribe(
+    this.systemService.getProductClass().subscribe(
       items => this.productClass = items
     );
   }
   
   changeNumber(ProductID: String, ProductNumber: String) {
-    this.shoppingCartService.setShoppingCart(
+    this.systemService.setShoppingCart(
       ProductID,
       Number(ProductNumber)
     )
     this.getTotalPrice()
+    this.getTotalNumber()
   }
 
   getTotalPrice() {
-    this.totalPrice = this.shoppingCartService.getTotalPrice()
+    this.systemService.getTotalPrice().subscribe(
+      totalPrice => 
+        this.totalPrice = totalPrice
+    );
+  }
+  getTotalNumber() {
+    this.systemService.getTotalNumber().subscribe(
+      totalNumber => 
+        this.totalNumber = totalNumber
+    );
   }
 
 }

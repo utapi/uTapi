@@ -4,6 +4,7 @@ export class ProductDetail{
     ProductImg: String
     ProductDesc: String
     ProductPrice: Number
+    ProductNumber: Number
     ClassID: String
 
     constructor(init?: Partial<ProductDetail>) {
@@ -23,6 +24,7 @@ export class ProductClass{
 export class ShoppingCart {
     ProductID: String
     ProductNumber: Number
+    UserID: String
     
     constructor(init?: Partial<ShoppingCart>) {
         Object.assign(this, init);

@@ -2,7 +2,7 @@
     <ion-list-header>
       <ion-label>{{productList.ClassName}}</ion-label>
     </ion-list-header>
-    <ion-item *ngFor="let product of shoppingCartService.getProductList(productList.ClassID)">
+    <ion-item *ngFor="let product of systemService.getProductList(productList.ClassID)">
       <ion-thumbnail slot="start">
           <img src="{{product.ProductImg}}">
         </ion-thumbnail>
@@ -12,7 +12,7 @@
 
         <ion-item>
             <ion-label>¥{{product.ProductPrice}}円</ion-label>
-            <ion-select placeholder="数量選択" (ionChange)="changeNumber(product.ProductID, $event.detail.value)">
+            <ion-select placeholder="数量選択" value="{{product.ProductNumber}}" (ionChange)="changeNumber(product.ProductID, $event.detail.value)">
               <ion-select-option value="0">0</ion-select-option>
               <ion-select-option value="1">1</ion-select-option>
               <ion-select-option value="2">2</ion-select-option>
@@ -20,14 +20,14 @@
               <ion-select-option value="4">4</ion-select-option>
             </ion-select>
         </ion-item>
-          
+        
       </ion-label>
       
     </ion-item>
 </ion-list>
 
 <ion-toolbar>
-  <ion-title>
-  　　合計金額：¥{{totalPrice}}円
-  </ion-title>
+  <ion-label>
+      カートの小計（商品{{totalNumber}}点）: ￥ {{totalPrice | number}}円
+  </ion-label>
 </ion-toolbar>
