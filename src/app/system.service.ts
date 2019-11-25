@@ -51,7 +51,7 @@ export class SystemService {
   async setShoppingCart(ProductID: String, ProductNumber: Number) {
     const item = this.shoppingCart.find(item => item.ProductID === ProductID)
     const UserID = await this.getUserID()
-    const itemDoc = this.angularFirestore.doc<ShoppingCart>(`ShoppingCart/${UserID}-${ProductID}`, ref => ref.where('size', '==', 'large'))
+    const itemDoc = this.angularFirestore.doc<ShoppingCart>(`ShoppingCart/${UserID}-${ProductID}`)
     // add
     if (!item && ProductNumber > 0) {
       const cart = {ProductID, ProductNumber, UserID}
