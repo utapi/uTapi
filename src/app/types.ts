@@ -4,7 +4,7 @@ export class ProductDetail{
     ProductImg: String
     ProductDesc: String
     ProductPrice: Number
-    ProductNumber: Number
+    ProductNumber: any
     ClassID: String
 
     constructor(init?: Partial<ProductDetail>) {

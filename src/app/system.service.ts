@@ -110,7 +110,7 @@ export class SystemService {
 
     items.map(item => {
       let cart = this.shoppingCart.find(s => s.ProductID === item.ProductID)
-      item.ProductNumber = cart ? cart.ProductNumber : 0
+      item.ProductNumber = cart ? cart.ProductNumber : ""
     })
 
     return items;
