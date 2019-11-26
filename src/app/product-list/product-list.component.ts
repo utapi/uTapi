@@ -29,8 +29,8 @@ export class ProductListComponent implements OnInit {
     );
   }
   
-  changeNumber(ProductID: String, ProductNumber: String) {
-    this.systemService.setShoppingCart(
+  async changeNumber(ProductID: String, ProductNumber: String) {
+    await this.systemService.setShoppingCart(
       ProductID,
       Number(ProductNumber)
     )

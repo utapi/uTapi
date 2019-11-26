@@ -11,7 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class SystemService {
 
-  public userID: String
+  public userID: String = "46g9lZ1vLZWVSa2iehLvQCYIFMF2"
   public shoppingCart: ShoppingCart[] = []
   public shoppingCartCollection
 
@@ -44,6 +44,7 @@ export class SystemService {
     if (!this.userID) {
       const credential = await this.angularFireAuth.auth.signInAnonymously();
       this.userID = credential.user.uid
+      console.log("UserID", this.userID)
     }
     return this.userID
   }
