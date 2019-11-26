@@ -26,8 +26,10 @@
     </ion-item>
 </ion-list>
 
-<ion-toolbar>
+<ion-toolbar style="text-align: center;">
   <ion-label>
       カートの小計（商品{{totalNumber}}点）: ￥ {{totalPrice | number}}円
   </ion-label>
+  <br>
+  <ion-button (click)="toCartPage()">レジに進む</ion-button>
 </ion-toolbar>

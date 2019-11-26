@@ -11,7 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class SystemService {
 
-  public userID: String = "46g9lZ1vLZWVSa2iehLvQCYIFMF2"
+  public userID: String
   public shoppingCart: ShoppingCart[] = []
   public shoppingCartCollection
 
@@ -22,7 +22,7 @@ export class SystemService {
     this.getShoppingCart()
   }
 
-  getProductDetailOne(productID: String): ProductDetail {
+  getProductDetailForProductID(productID: String): ProductDetail {
     return PRODUCTSDETAIL.find(item => item.ProductID === productID);
   }
 
@@ -44,7 +44,6 @@ export class SystemService {
     if (!this.userID) {
       const credential = await this.angularFireAuth.auth.signInAnonymously();
       this.userID = credential.user.uid
-      console.log("UserID", this.userID)
     }
     return this.userID
   }
@@ -78,7 +77,7 @@ export class SystemService {
   getTotalPrice(): Observable<Number> {
     let totalPrice = 0
     this.shoppingCart.map(item => {
-      const product = this.getProductDetailOne(item.ProductID)
+      const product = this.getProductDetailForProductID(item.ProductID)
       const ProductPrice: any = product.ProductPrice
       const ProductNumber: any = item.ProductNumber
       totalPrice += ProductPrice * ProductNumber

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="戻る"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      注文
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>商品の受取</ion-list-header>
+    <ion-item>
+      <ion-segment>
+        <ion-segment-button value="店舗受取" checked>
+          <ion-icon name="walk"></ion-icon>
+          <ion-label>店舗受取</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="配送">
+          <ion-label>配送</ion-label>
+          <ion-icon name="cube"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+
+    <ion-list-header>
+      商品明細
+    </ion-list-header>
+    <ion-item *ngFor="let cart of shoppingCart">
+      <ion-label>{{systemService.getProductDetailForProductID(cart.ProductID).ProductName}}</ion-label>
+      <ion-note slot="end" color="primary">
+        <p>{{cart.ProductNumber}}点 x ¥{{systemService.getProductDetailForProductID(cart.ProductID).ProductPrice}}円</p>
+      </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-note slot="end" color="primary">
+        <p><b>合計（商品{{totalNumber}}点）：¥{{totalPrice | number}}円</b></p>
+      </ion-note>
+    </ion-item>
+
+    <ion-list-header>商品の受取</ion-list-header>
+    <ion-item>
+      <ion-segment>
+        <ion-segment-button value="現金" checked>
+          <ion-icon name="wallet"></ion-icon>
+          <ion-label>現金</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="PayPay">
+          <ion-label>PayPay</ion-label>
+          <ion-icon name="globe"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="クレジットカード">
+          <ion-label>クレジットカード</ion-label>
+          <ion-icon name="card"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+
+    <ion-list-header>店舗へメッセージ</ion-list-header>
+    <ion-item>
+      <ion-textarea placeholder=""></ion-textarea>
+    </ion-item>
+
+    <br>
+    <div style="text-align: center;">
+      <ion-button>注文確認</ion-button>
+    </div>
+
+  </ion-list>
+</ion-content>
