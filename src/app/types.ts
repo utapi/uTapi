@@ -24,7 +24,6 @@ export class ProductClass{
 export class ShoppingCart {
     ProductID: String
     ProductNumber: Number
-    UserID: String
     
     constructor(init?: Partial<ShoppingCart>) {
         Object.assign(this, init);

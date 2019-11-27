@@ -13,7 +13,6 @@ export class SystemService {
 
   public userID: String
   public shoppingCart: ShoppingCart[] = []
-  public shoppingCartCollection
 
   constructor(private angularFirestore: AngularFirestore,
               private angularFireAuth: AngularFireAuth
@@ -28,16 +27,14 @@ export class SystemService {
 
   async getShoppingCart() {
     const UserID = await this.getUserID()
-    this.shoppingCartCollection = this.angularFirestore
-    .collection<ShoppingCart>('ShoppingCart', ref => ref.where('UserID', '==', UserID));
-    this.shoppingCartCollection.valueChanges().subscribe(
+    const itemsDoc = this.angularFirestore.collection('ShoppingCart').doc(`${UserID}`)
+    itemsDoc.valueChanges().subscribe(
       items => {
-        this.shoppingCart = items
+        this.shoppingCart = items ? items["shoppingCart"] : []
         this.getTotalPrice()
         this.getTotalNumber()
       }
     )
-    return of(this.shoppingCartCollection.valueChanges())
   }
 
   async getUserID() {
@@ -51,19 +48,17 @@ export class SystemService {
   async setShoppingCart(ProductID: String, ProductNumber: Number) {
     const item = this.shoppingCart.find(item => item.ProductID === ProductID)
     const UserID = await this.getUserID()
-    const itemDoc = this.angularFirestore.doc<ShoppingCart>(`ShoppingCart/${UserID}-${ProductID}`)
+    const itemsDoc = this.angularFirestore.collection<ShoppingCart[]>('ShoppingCart').doc(`${UserID}`)
     // add
     if (!item && ProductNumber > 0) {
-      const cart = {ProductID, ProductNumber, UserID}
+      const cart = {ProductID, ProductNumber}
       this.shoppingCart.push(cart)
-      itemDoc.set({ProductID, ProductNumber, UserID})
     }
     // change
     if (item && ProductNumber > 0) {
       this.shoppingCart = this.shoppingCart.map(item => {
         if (item.ProductID === ProductID) {
           item.ProductNumber = ProductNumber
-          itemDoc.update({ProductID, ProductNumber});
         }
         return item
       })
@@ -71,8 +66,8 @@ export class SystemService {
     // del
     if (ProductNumber == 0) {
       this.shoppingCart = this.shoppingCart.filter(item => item.ProductID != ProductID)
-      itemDoc.delete()
     }
+    itemsDoc.set({shoppingCart: this.shoppingCart})
   }
   getTotalPrice(): Observable<Number> {
     let totalPrice = 0
