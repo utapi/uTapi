@@ -23,6 +23,9 @@ export class CartPage implements OnInit {
   ngOnInit() {
     if (!this.shoppingCart.length) {
       this.router.navigate(['/tabs/tab1'])
+      setTimeout(() => {
+        this.shoppingCart = this.systemService.shoppingCart
+      }, 1000);
     }
     this.getTotalPrice()
     this.getTotalNumber()

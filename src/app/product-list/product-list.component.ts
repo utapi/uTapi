@@ -33,8 +33,8 @@ export class ProductListComponent implements OnInit {
     );
   }
   
-  async changeNumber(ProductID: String, ProductNumber: String) {
-    await this.systemService.setShoppingCart(
+  changeNumber(ProductID: String, ProductNumber: String) {
+    this.systemService.setShoppingCart(
       ProductID,
       Number(ProductNumber)
     )
