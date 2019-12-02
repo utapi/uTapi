@@ -31,10 +31,6 @@ export class CartPage implements OnInit {
     this.getTotalNumber()
   }
 
-  getShoppingCart() {
-
-  }
-
   getTotalPrice() {
     this.systemService.getTotalPrice().subscribe(
       totalPrice =>
@@ -46,6 +42,10 @@ export class CartPage implements OnInit {
       totalNumber =>
         this.totalNumber = totalNumber
     );
+  }
+  
+  toOrderComplete() {
+    this.router.navigate(['/tabs/tab1/order-complete'])
   }
 
 }
