@@ -13,7 +13,7 @@
   <ion-list>
     <ion-list-header>商品の受取</ion-list-header>
     <ion-item>
-      <ion-segment>
+      <ion-segment (ionChange)="receiveMethod = $event.detail.value">
         <ion-segment-button value="店舗受取" checked>
           <ion-icon name="walk"></ion-icon>
           <ion-label>店舗受取</ion-label>
@@ -42,7 +42,7 @@
 
     <ion-list-header>商品の受取</ion-list-header>
     <ion-item>
-      <ion-segment>
+      <ion-segment (ionChange)="payMethod = $event.detail.value">
         <ion-segment-button value="現金" checked>
           <ion-icon name="wallet"></ion-icon>
           <ion-label>現金</ion-label>
@@ -60,7 +60,7 @@
 
     <ion-list-header>店舗へメッセージ</ion-list-header>
     <ion-item>
-      <ion-textarea placeholder=""></ion-textarea>
+      <ion-textarea placeholder="" (ionChange)="toShopMemo = $event.detail.value"></ion-textarea>
     </ion-item>
 
     <br>

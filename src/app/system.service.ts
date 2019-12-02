@@ -66,7 +66,10 @@ export class SystemService {
     if (ProductNumber == 0) {
       this.shoppingCart = this.shoppingCart.filter(item => item.ProductID != ProductID)
     }
-    itemsDoc.set({ shoppingCart: this.shoppingCart })
+    itemsDoc.set({ 
+      shoppingCart: this.shoppingCart,
+      timestamp: firestore.FieldValue.serverTimestamp(),
+     })
   }
   getTotalPrice(): Observable<Number> {
     let totalPrice = 0
