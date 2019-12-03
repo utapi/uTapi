@@ -53,30 +53,8 @@ export class CartPage implements OnInit {
       PayMethod: this.payMethod,
       ToShopMemo: this.toShopMemo,
     }
-    console.log({orderDetail})
-    let OrderDetail = {
-      OrderID: "00001",
-      UserID: "aaaaaa",
-      ReceiveMethod: "shop",//
-      PayMethod: "cash",//
-      ToShopMemo: "砂糖少なめ",//
-      OrderStatus: "準備中",
-      ProductList: [
-        {
-          ProductID: "01",
-          ProductName: "tapioka",
-          ProductNumber: 1,
-          ProductPrice: 520
-        }
-      ],
-      timestamp: "xxx-xx-xx xx:xx:xx"
-    }
-
+    this.systemService.saveOrder(orderDetail)
     this.router.navigate(['/tabs/tab1/order-complete'])
-  }
-
-  segmentChanged(a) {
-    console.log(a)
   }
 
 }
