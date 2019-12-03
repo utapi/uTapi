@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SystemService } from '../system.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,21 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  public geting = true
+  public having = false
+  public orderList = []
+  constructor(private systemService: SystemService) {
+    this.getOrderList()
+  }
+
+  getOrderList() {
+    this.systemService.getMyOrder().subscribe(
+      items => {
+        this.orderList = items
+        this.having = (items.length) ? true : false
+        this.geting = false
+      }
+    )
+  }
 
 }

@@ -9,12 +9,30 @@
 <ion-content>
   <div style="text-align: center;color: var(--ion-color-primary)">
     <h1 style="font-size: 5em;">
-        <ion-icon name="help-buoy"></ion-icon>
+      <ion-icon name="planet"></ion-icon>
     </h1>
-    <h2 style="color: var(--ion-color-primary)">
-        商品が注文されていません
-    </h2>
-    <ion-button [routerLink]="['/tabs/tab1']">今すぐ注文する</ion-button>
-  </div>
 
+    <div *ngIf="having == false">
+      <h2 style="color: var(--ion-color-primary)">
+        商品が注文されていません
+      </h2>
+      <ion-button [routerLink]="['/tabs/tab1']">今すぐ注文する</ion-button>
+    </div>
+
+    <div *ngIf="having">
+      <ion-list>
+        <ion-item>
+          <div style="text-align: center;">
+            <p>注文履歴を選んでください</p>
+          </div>
+        </ion-item>
+        <div *ngFor="let order of orderList">
+          <ion-item [routerLink]="['/tabs/tab2/order-detail/'+order.OrderID]">
+            <ion-label>{{order.timestamp.seconds * 1000 | date:"yyyy/MM/dd HH:mm:ss"}}</ion-label>
+          </ion-item>
+        </div>
+      </ion-list>
+    </div>
+
+  </div>
 </ion-content>

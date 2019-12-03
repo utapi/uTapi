@@ -165,4 +165,15 @@ export class SystemService {
     return doc
   }
 
+  getMyOrder(): Observable<any> {
+    if (!this.userID) return of()
+    const doc = this.angularFirestore.collection('OrderDetail', ref => ref.where('UserID', '==', this.userID).orderBy('timestamp', 'desc')).valueChanges()
+    return doc
+  }
+
+  getOrder(OrderID): Observable<any> {
+    const doc = this.angularFirestore.doc("OrderDetail/"+OrderID).valueChanges()
+    return doc
+  }
+
 }
