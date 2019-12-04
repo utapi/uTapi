@@ -14,9 +14,8 @@ import { OrderDetailPage } from '../order-detail/order-detail.page';
     RouterModule.forChild([
       { path: '', component: Tab2Page },
       { path: 'order-detail/:id', component: OrderDetailPage },
-      
     ])
   ],
   declarations: [Tab2Page, OrderDetailPage]
 })
-export class Tab2PageModule {}
+export class Tab2PageModule { }

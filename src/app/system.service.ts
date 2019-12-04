@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from "firebase/app";
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,13 @@ export class SystemService {
   public OrderDetail: any
 
   constructor(private angularFirestore: AngularFirestore,
-    private angularFireAuth: AngularFireAuth
+    private angularFireAuth: AngularFireAuth,
+    private router: Router
   ) {
     this.getUserID()
+    if (!this.userID) {
+      this.router.navigate(['/tabs/tab1']);
+    }
   }
 
   getProductDetailForProductID(productID: String): ProductDetail {
@@ -36,7 +41,7 @@ export class SystemService {
   }
 
   getUserID() {
-    this.angularFireAuth.auth.onAuthStateChanged(function (user) {
+    this.angularFireAuth.authState.subscribe(function (user) {
       if (user) {
         const uid = user.uid;
         this.userID = uid

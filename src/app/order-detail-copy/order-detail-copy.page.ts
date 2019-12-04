@@ -4,11 +4,11 @@ import { SystemService } from '../system.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-order-detail',
-  templateUrl: './order-detail.page.html',
-  styleUrls: ['./order-detail.page.scss'],
+  selector: 'app-order-detail-copy',
+  templateUrl: './order-detail-copy.page.html',
+  styleUrls: ['./order-detail-copy.page.scss'],
 })
-export class OrderDetailPage implements OnInit {
+export class OrderDetailCopyPage implements OnInit {
 
   orderDetail
   loading = true
