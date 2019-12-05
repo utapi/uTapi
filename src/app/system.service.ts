@@ -113,15 +113,29 @@ export class SystemService {
     return this.angularFirestore.collection('orderDetail').doc(`${OrderID}`).valueChanges()
   }
 
-  saveOrder(orderDetail: any) {
+  saveFeedback(star, title, content) {
+    this.angularFirestore.collection('feedback').doc(this.generateIDByTimestamp()).set({
+      star,
+      title,
+      content,
+      timestamp: firestore.FieldValue.serverTimestamp(),
+    })
+  }
+
+  generateIDByTimestamp() {
     const myDate = new Date();
-    const orderID = myDate.getFullYear()
+    const ID = myDate.getFullYear()
       + this.PrefixInteger(myDate.getMonth() + 1, 2)
       + this.PrefixInteger(myDate.getDate(), 2)
       + this.PrefixInteger(myDate.getHours(), 2)
       + this.PrefixInteger(myDate.getMinutes(), 2)
       + this.PrefixInteger(myDate.getSeconds(), 2)
       + this.PrefixInteger(this.RandomNumBoth(0, 9999), 4)
+    return ID
+  }
+
+  saveOrder(orderDetail: any) {
+    const orderID = this.generateIDByTimestamp()
     const productList = this.shoppingCart.map(item => {
       item["productName"] = this.getProductDetailForProductID(item.productID).productName
       item["productPrice"] = this.getProductDetailForProductID(item.productID).productPrice
@@ -149,6 +163,7 @@ export class SystemService {
 
     return this.orderDetail
   }
+
 
   RandomNumBoth(Min, Max) {
     var Range = Max - Min;

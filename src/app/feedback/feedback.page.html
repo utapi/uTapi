@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="戻る"></ion-back-button>
+    </ion-buttons>
+    <ion-title>フィードバック</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-content>
+    <ion-list>
+
+        <div style="margin: 2em auto;text-align: center;">
+            <ion-avatar style="width: 7em;height: 7em;margin: 0 auto;">
+              <img src="assets/icons/icon-512x512.png">
+            </ion-avatar>
+            <p>フィードバックのご協力をお願いします</p>
+          </div>
+      <ion-list-header>全体的な評価</ion-list-header>
+      <ion-item>
+        <ion-segment (ionChange)="star = $event.detail.value">
+          <ion-segment-button value="ハッピー" checked>
+            <ion-icon name="happy"></ion-icon>
+            <ion-label>ハッピー</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="アンハッピー">
+            <ion-icon name="sad"></ion-icon>
+            <ion-label>アンハッピー</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+
+      <ion-list-header>タイトル</ion-list-header>
+      <ion-item>
+        <ion-input (ionChange)="title = $event.detail.value"></ion-input>
+      </ion-item>
+
+      <ion-list-header>フィードバックを記入してください</ion-list-header>
+      <ion-item>
+        <ion-textarea placeholder="" (ionChange)="content = $event.detail.value"></ion-textarea>
+      </ion-item>
+
+      <br>
+      <div style="text-align: center;">
+        <ion-button (click)="toFeedbackComplete()">送信</ion-button>
+      </div>
+
+    </ion-list>
+  </ion-content>
+
+
+</ion-content>

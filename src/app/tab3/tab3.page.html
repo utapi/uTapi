@@ -23,15 +23,27 @@
     <ion-item [routerLink]="['/tabs/tab3/shop-address']">
       <ion-label>店舗住所</ion-label>
     </ion-item>
+    <ion-item [routerLink]="['/feedback']">
+      <ion-label>フィードバック</ion-label>
+    </ion-item>
     <ion-item [routerLink]="['/tabs/tab3/app-help']">
       <ion-label>ヘルプ</ion-label>
     </ion-item>
   </ion-list>
   <div style="text-align: center;padding: 0 1em;">
-    <p style="color: gray;">
-        * 当アプリは日本工学院専門学校における卒業制作の成果物です。
-        実際に注文するといったご利用はしないよう予めご了承くださいますようお願い申し上げます。
-    </p>
+    <div style="color: gray;">
+      <small>
+        <p>
+          * 当アプリは日本工学院専門学校における卒業制作の成果物です。
+          実際に注文するといったご利用はしないよう予めご了承くださいますようお願い申し上げます。
+        </p>
+        <p>
+          * 当卒業制作のさらなる品質向上とサービス充実のために、<br>
+          <a [routerLink]="['/feedback']">フィードバック</a>
+          のご協力をお願いします。
+        </p>
+      </small>
+    </div>
     <p>
         Team: Tapioka <br>
         Varsion: 1.0.0

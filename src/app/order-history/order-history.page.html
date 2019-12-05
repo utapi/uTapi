@@ -13,14 +13,14 @@
       <ion-icon name="planet"></ion-icon>
     </h1>
 
-    <div *ngIf="having == false">
+    <div *ngIf="!geting && !having">
       <h2 style="color: var(--ion-color-primary)">
         商品が注文されていません
       </h2>
       <ion-button [routerLink]="['/tabs/tab1']">今すぐ注文する</ion-button>
     </div>
 
-    <div *ngIf="having">
+    <div *ngIf="!geting && having">
       <ion-list>
         <ion-item>
           <div style="text-align: center;">

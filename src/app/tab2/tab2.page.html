@@ -12,14 +12,14 @@
       <ion-icon name="planet"></ion-icon>
     </h1>
 
-    <div *ngIf="having == false">
+    <div *ngIf="!geting && !having">
       <h2 style="color: var(--ion-color-primary)">
         商品が注文されていません
       </h2>
       <ion-button [routerLink]="['/tabs/tab1']">今すぐ注文する</ion-button>
     </div>
 
-    <div *ngIf="having">
+    <div *ngIf="!geting && having">
       <ion-list>
         <ion-item>
           <div style="text-align: center;">
@@ -35,4 +35,19 @@
     </div>
 
   </div>
+
+  <div style="color: gray;text-align: center;padding: 0 1em;" *ngIf="!isLoading">
+    <small>
+      <p>
+        * 当アプリは日本工学院専門学校における卒業制作の成果物です。
+        実際に注文するといったご利用はしないよう予めご了承くださいますようお願い申し上げます。
+      </p>
+      <p>
+        * 当卒業制作のさらなる品質向上とサービス充実のために、<br>
+        <a [routerLink]="['/feedback']">フィードバック</a>
+        のご協力をお願いします。
+      </p>
+    </small>
+  </div>
+
 </ion-content>
