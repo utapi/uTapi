@@ -9,25 +9,24 @@ import { Router } from '@angular/router';
 })
 export class OrderCompletePage implements OnInit {
 
-  public OrderDetail = this.systemService.OrderDetail
+  public orderDetail = this.systemService.orderDetail
   public waitingTime: any = "計算中..."
 
   constructor(private router: Router, private systemService: SystemService) {
-    if (!this.OrderDetail) {
+    if (!this.orderDetail) {
       this.router.navigate(['/tabs/tab1'])
       setInterval(() => {
-        this.OrderDetail = this.systemService.OrderDetail
+        this.orderDetail = this.systemService.orderDetail
       }, 1000);
     }
     this.getWaitingTime()
-    
   }
 
   ngOnInit() {
   }
 
   getWaitingTime() {
-    this.systemService.getWaitingTime(this.OrderDetail.OrderID).subscribe(
+    this.systemService.getWaitingTime(this.orderDetail.orderID).subscribe(
       items => {
         this.waitingTime = items.length * 2 + "分"
       }

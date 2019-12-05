@@ -29,9 +29,9 @@
       商品明細
     </ion-list-header>
     <ion-item *ngFor="let cart of shoppingCart">
-      <ion-label>{{systemService.getProductDetailForProductID(cart.ProductID).ProductName}}</ion-label>
+      <ion-label>{{systemService.getProductDetailForProductID(cart.productID).productName}}</ion-label>
       <ion-note slot="end" color="primary">
-        <p>{{cart.ProductNumber}}点 x ¥{{systemService.getProductDetailForProductID(cart.ProductID).ProductPrice}}円</p>
+        <p>{{cart.productNumber}}点 x ¥{{systemService.getProductDetailForProductID(cart.productID).productPrice}}円</p>
       </ion-note>
     </ion-item>
     <ion-item>

@@ -1,18 +1,18 @@
-<ion-list lines="none" *ngFor="let productList of productClass">
+<ion-list lines="none" *ngFor="let products of productClass">
     <ion-list-header>
-      <ion-label>{{productList.ClassName}}</ion-label>
+      <ion-label>{{products.className}}</ion-label>
     </ion-list-header>
-    <ion-item *ngFor="let product of systemService.getProductList(productList.ClassID)">
+    <ion-item *ngFor="let product of products.productList">
       <ion-thumbnail slot="start">
-          <img src="{{product.ProductImg}}">
+          <img src="{{product.productImg}}">
         </ion-thumbnail>
       <ion-label>
-        <h2>{{product.ProductName}}</h2>
-        <p>{{product.ProductDesc}}</p>
+        <h2>{{product.productName}}</h2>
+        <p>{{product.productDesc}}</p>
 
         <ion-item>
-            <ion-label>¥{{product.ProductPrice}}円</ion-label>
-            <ion-select placeholder="数量選択" value="{{product.ProductNumber}}" (ionChange)="changeNumber(product.ProductID, $event.detail.value)">
+            <ion-label>¥{{product.productPrice}}円</ion-label>
+            <ion-select placeholder="数量選択" value="{{product.productNumber}}" (ionChange)="changeNumber(product.productID, $event.detail.value)">
               <ion-select-option value="0">0</ion-select-option>
               <ion-select-option value="1">1</ion-select-option>
               <ion-select-option value="2">2</ion-select-option>
@@ -26,7 +26,7 @@
     </ion-item>
 </ion-list>
 
-<ion-toolbar style="text-align: center;">
+<ion-toolbar style="text-align: center;" *ngIf="!isLoading">
   <ion-label>
       カートの小計（商品{{totalNumber}}点）: ￥ {{totalPrice | number}}円
   </ion-label>

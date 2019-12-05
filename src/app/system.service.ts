@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProductClass, ProductDetail, ShoppingCart } from './types';
 import { PRODUCTCLASS, PRODUCTSDETAIL } from './mock.product';
 import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { firestore } from "firebase/app";
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -12,116 +12,110 @@ import { Router } from '@angular/router';
 })
 export class SystemService {
 
-  public userID: String
   public shoppingCart: ShoppingCart[] = []
-  public OrderDetail: any
+  public orderDetail: any
 
   constructor(private angularFirestore: AngularFirestore,
     private angularFireAuth: AngularFireAuth,
     private router: Router
   ) {
-    this.getUserID()
-    if (!this.userID) {
-      this.router.navigate(['/tabs/tab1']);
-    }
+    this.angularFireAuth.auth.signInAnonymously();
+    this.router.navigate(['/tabs/tab1']);
+  }
+
+  getUserID(): Observable<firebase.User> {
+    return this.angularFireAuth.authState
+  }
+
+  getProductDetailByProductID(productID: String): ProductDetail {
+    return PRODUCTSDETAIL.find(item => item.productID === productID);
+  }
+
+  getShoppingCartByUserID(userID: any): AngularFirestoreDocument<any> {
+    return this.angularFirestore.collection('shoppingCart').doc(`${userID}`)
   }
 
   getProductDetailForProductID(productID: String): ProductDetail {
-    return PRODUCTSDETAIL.find(item => item.ProductID === productID);
+    return PRODUCTSDETAIL.find(item => item.productID === productID);
   }
 
-  getShoppingCart() {
-    if (!this.userID) return
-    const itemsDoc = this.angularFirestore.collection('ShoppingCart').doc(`${this.userID}`)
-    itemsDoc.valueChanges().subscribe(
-      items => {
-        this.shoppingCart = items ? items["shoppingCart"] : []
-      }
-    )
-  }
-
-  getUserID() {
-    this.angularFireAuth.authState.subscribe(function (user) {
-      if (user) {
-        const uid = user.uid;
-        this.userID = uid
-        this.getShoppingCart()
-      }
-    }.bind(this));
-    this.angularFireAuth.auth.signInAnonymously();
-  }
-
-  setShoppingCart(ProductID: String, ProductNumber: Number) {
-    const item = this.shoppingCart.find(item => item.ProductID === ProductID)
-    const itemsDoc = this.angularFirestore.collection<ShoppingCart[]>('ShoppingCart').doc(`${this.userID}`)
+  setShoppingCart(productID: String, productNumber: Number, userID: String): void {
+    const ProductDetail = this.shoppingCart.find(item => item.productID === productID);
     // add
-    if (!item && ProductNumber > 0) {
-      const cart = { ProductID, ProductNumber }
+    if (!ProductDetail && productNumber > 0) {
+      const cart = { productID, productNumber }
       this.shoppingCart.push(cart)
     }
     // change
-    if (item && ProductNumber > 0) {
+    if (ProductDetail && productNumber > 0) {
       this.shoppingCart = this.shoppingCart.map(item => {
-        if (item.ProductID === ProductID) {
-          item.ProductNumber = ProductNumber
+        if (item.productID === productID) {
+          item.productNumber = productNumber
         }
         return item
       })
     }
     // del
-    if (ProductNumber == 0) {
-      this.shoppingCart = this.shoppingCart.filter(item => item.ProductID != ProductID)
+    if (productNumber == 0) {
+      this.shoppingCart = this.shoppingCart.filter(item => item.productID != productID)
     }
-    itemsDoc.set({
+    this.getShoppingCartByUserID(userID).set({
       shoppingCart: this.shoppingCart,
       timestamp: firestore.FieldValue.serverTimestamp(),
     })
   }
-  getTotalPrice(): Observable<Number> {
+
+  getTotalPrice(): Number {
     let totalPrice = 0
-    this.shoppingCart.map(item => {
-      const product = this.getProductDetailForProductID(item.ProductID)
-      const ProductPrice: any = product.ProductPrice
-      const ProductNumber: any = item.ProductNumber
-      totalPrice += ProductPrice * ProductNumber
+    this.shoppingCart.map(cart => {
+      const productDetail = this.getProductDetailByProductID(cart["productID"])
+      const productPrice: any = productDetail.productPrice
+      const productNumber: any = cart.productNumber
+      totalPrice += productPrice * productNumber
     })
-    return of(totalPrice)
+    return totalPrice
   }
 
-  getTotalNumber(): Observable<Number> {
+  getTotalNumber(): Number {
     let totalNumber = 0
-    this.shoppingCart.map(item => {
-      const ProductNumber: any = item.ProductNumber
-      totalNumber += ProductNumber
+    this.shoppingCart.map(cart => {
+      const productNumber: any = cart.productNumber
+      totalNumber += productNumber
     })
-    return of(totalNumber)
+    return totalNumber
   }
-
 
   getProductClass(): Observable<ProductClass[]> {
     return of(PRODUCTCLASS);
   }
 
-  getProductDetail(productID: String): Observable<ProductDetail[]> {
-    return of(PRODUCTSDETAIL);
-  }
-
-  getProductList(classID: String): ProductDetail[] {
+  getProductListByClassID(classID: String): ProductDetail[] {
     let items = classID
-      ? PRODUCTSDETAIL.filter(item => item.ClassID === classID)
+      ? PRODUCTSDETAIL.filter(item => item.classID === classID)
       : PRODUCTSDETAIL
 
     items.map(item => {
-      let cart = this.shoppingCart.find(s => s.ProductID === item.ProductID)
-      item.ProductNumber = cart ? cart.ProductNumber : ""
+      let cart = this.shoppingCart.find(s => s.productID === item.productID)
+      item.productNumber = cart ? cart.productNumber : ""
     })
-
     return items;
+  }
+
+  getWaitingTime(OrderID: String): Observable<any> {
+    return this.angularFirestore.collection('orderDetail', ref => ref.where('orderID', '<', OrderID)).valueChanges()
+  }
+
+  getOrderDetailByUserID(userID: String): Observable<any> {
+    return this.angularFirestore.collection('orderDetail', ref => ref.where('userID', '==', userID).orderBy('timestamp', 'desc')).valueChanges()
+  }
+
+  getOrderDetailByOrderID(OrderID: String): Observable<any> {
+    return this.angularFirestore.collection('orderDetail').doc(`${OrderID}`).valueChanges()
   }
 
   saveOrder(orderDetail: any) {
     const myDate = new Date();
-    const OrderID = myDate.getFullYear()
+    const orderID = myDate.getFullYear()
       + this.PrefixInteger(myDate.getMonth() + 1, 2)
       + this.PrefixInteger(myDate.getDate(), 2)
       + this.PrefixInteger(myDate.getHours(), 2)
@@ -129,56 +123,42 @@ export class SystemService {
       + this.PrefixInteger(myDate.getSeconds(), 2)
       + this.PrefixInteger(this.RandomNumBoth(0, 9999), 4)
     const productList = this.shoppingCart.map(item => {
-      item["ProductName"] = this.getProductDetailForProductID(item.ProductID).ProductName
-      item["ProductPrice"] = this.getProductDetailForProductID(item.ProductID).ProductPrice
+      item["productName"] = this.getProductDetailForProductID(item.productID).productName
+      item["productPrice"] = this.getProductDetailForProductID(item.productID).productPrice
       return item
     })
-    const orderDetailDoc = this.angularFirestore.collection('OrderDetail').doc(OrderID)
-    this.OrderDetail = {
-      OrderID: OrderID,
-      UserID: this.userID,
-      ReceiveMethod: orderDetail.ReceiveMethod,
-      PayMethod: orderDetail.PayMethod,
-      ToShopMemo: orderDetail.ToShopMemo,
-      OrderStatus: "準備中",
-      ProductList: productList,
+    const orderDetailDoc = this.angularFirestore.collection('orderDetail').doc(orderID)
+    this.orderDetail = {
+      orderID: orderID,
+      userID: orderDetail.userID,
+      receiveMethod: orderDetail.receiveMethod,
+      payMethod: orderDetail.payMethod,
+      toShopMemo: orderDetail.toShopMemo,
+      orderStatus: "準備中",
+      productList: productList,
       timestamp: firestore.FieldValue.serverTimestamp(),
     }
-    orderDetailDoc.set(this.OrderDetail)
-    
+    orderDetailDoc.set(this.orderDetail)
+
     this.shoppingCart = []
-    const itemsDoc = this.angularFirestore.collection<ShoppingCart[]>('ShoppingCart').doc(`${this.userID}`)
+    const itemsDoc = this.angularFirestore.collection<ShoppingCart[]>('shoppingCart').doc(`${orderDetail.userID}`)
     itemsDoc.set({
       shoppingCart: this.shoppingCart,
       timestamp: firestore.FieldValue.serverTimestamp(),
     })
 
-    return this.OrderDetail
+    return this.orderDetail
   }
+
   RandomNumBoth(Min, Max) {
     var Range = Max - Min;
     var Rand = Math.random();
     var num = Min + Math.round(Rand * Range);
     return num;
   }
+
   PrefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
-  }
-
-  getWaitingTime(OrderID): Observable<any> {
-    const doc = this.angularFirestore.collection('OrderDetail', ref => ref.where('OrderID', '<', OrderID)).valueChanges()
-    return doc
-  }
-
-  getMyOrder(): Observable<any> {
-    if (!this.userID) return of()
-    const doc = this.angularFirestore.collection('OrderDetail', ref => ref.where('UserID', '==', this.userID).orderBy('timestamp', 'desc')).valueChanges()
-    return doc
-  }
-
-  getOrder(OrderID): Observable<any> {
-    const doc = this.angularFirestore.doc("OrderDetail/"+OrderID).valueChanges()
-    return doc
   }
 
 }

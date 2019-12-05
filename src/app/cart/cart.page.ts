@@ -16,11 +16,12 @@ export class CartPage implements OnInit {
   receiveMethod: String = "店舗受取"
   payMethod: String = "現金"
   toShopMemo: String = ""
+  userID
 
   constructor(private router: Router,
-              private systemService: SystemService
-              ) {
-    
+    private systemService: SystemService
+  ) {
+
   }
 
   ngOnInit() {
@@ -32,26 +33,36 @@ export class CartPage implements OnInit {
     }
     this.getTotalPrice()
     this.getTotalNumber()
+    this.systemService.getUserID().subscribe(user => {
+      this.userID = user.uid
+    })
+
+    this.systemService.getShoppingCartByUserID(this.userID).valueChanges().subscribe(cart => {
+      if (cart && cart["shoppingCart"]) {
+        this.systemService.shoppingCart = cart["shoppingCart"]
+      }
+      this.systemService.getProductClass().subscribe(
+        items => {
+          this.getTotalPrice()
+          this.getTotalNumber()
+        }
+      );
+    })
   }
 
   getTotalPrice() {
-    this.systemService.getTotalPrice().subscribe(
-      totalPrice =>
-        this.totalPrice = totalPrice
-    );
+    this.totalPrice = this.systemService.getTotalPrice()
   }
   getTotalNumber() {
-    this.systemService.getTotalNumber().subscribe(
-      totalNumber =>
-        this.totalNumber = totalNumber
-    );
+    this.totalNumber = this.systemService.getTotalNumber()
   }
-  
+
   toOrderComplete() {
     let orderDetail = {
-      ReceiveMethod: this.receiveMethod,
-      PayMethod: this.payMethod,
-      ToShopMemo: this.toShopMemo,
+      receiveMethod: this.receiveMethod,
+      payMethod: this.payMethod,
+      toShopMemo: this.toShopMemo,
+      userID: this.userID
     }
     this.systemService.saveOrder(orderDetail)
     this.router.navigate(['/tabs/tab1/order-complete'])

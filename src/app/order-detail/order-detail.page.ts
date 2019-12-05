@@ -22,7 +22,7 @@ export class OrderDetailPage implements OnInit {
 
   ngOnInit() {
     const orderID = this.route.snapshot.paramMap.get('id');
-    this.systemService.getOrder(orderID).subscribe(item => {
+    this.systemService.getOrderDetailByOrderID(orderID).subscribe(item => {
       this.orderDetail = item
       this.loading = false
       this.getWaitingTime()
@@ -30,7 +30,7 @@ export class OrderDetailPage implements OnInit {
   }
 
   getWaitingTime() {
-    this.systemService.getWaitingTime(this.orderDetail.OrderID).subscribe(
+    this.systemService.getWaitingTime(this.orderDetail.orderID).subscribe(
       items => {
         this.waitingTime = items.length * 2 + "分"
       }

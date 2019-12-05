@@ -1,30 +1,27 @@
-export class ProductDetail{
-    ProductID: String
-    ProductName: String
-    ProductImg: String
-    ProductDesc: String
-    ProductPrice: Number
-    ProductNumber: any
-    ClassID: String
-
+export class ProductDetail {
+    productID: String
+    productName: String
+    productImg: String
+    productDesc: String
+    productPrice: Number
+    productNumber: any
+    classID: String
     constructor(init?: Partial<ProductDetail>) {
         Object.assign(this, init);
     }
 }
 
-export class ProductClass{
-    ClassID: String
-    ClassName: String
-    
+export class ProductClass {
+    classID: String
+    className: String
     constructor(init?: Partial<ProductClass>) {
         Object.assign(this, init);
     }
 }
 
 export class ShoppingCart {
-    ProductID: String
-    ProductNumber: Number
-    
+    productID: String
+    productNumber: Number
     constructor(init?: Partial<ShoppingCart>) {
         Object.assign(this, init);
     }
