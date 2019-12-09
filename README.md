@@ -12,7 +12,7 @@ npm install
 ionic serve
 ```
 
-# Building
+## Building
 ```
 ionic build
 ```
