@@ -27,7 +27,7 @@ export class FeedbackPage implements OnInit {
 
     const alert = await this.alertController.create({
       header: 'ありがとうございます',
-      message: 'フィードバックを送信しました',
+      message: 'レビューを送信しました',
       buttons: [
         {
           text: 'OK',

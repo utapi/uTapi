@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/" text="戻る"></ion-back-button>
     </ion-buttons>
-    <ion-title>フィードバック</ion-title>
+    <ion-title>レビュー</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
             <ion-avatar style="width: 7em;height: 7em;margin: 0 auto;">
               <img src="assets/icons/icon-512x512.png">
             </ion-avatar>
-            <p>フィードバックのご協力をお願いします</p>
+            <p>レビューのご協力をお願いします</p>
           </div>
       <ion-list-header>全体的な評価</ion-list-header>
       <ion-item>
@@ -32,12 +32,12 @@
         </ion-segment>
       </ion-item>
 
-      <ion-list-header>タイトル</ion-list-header>
+      <ion-list-header>レビュータイトル</ion-list-header>
       <ion-item>
         <ion-input (ionChange)="title = $event.detail.value"></ion-input>
       </ion-item>
 
-      <ion-list-header>フィードバックを記入してください</ion-list-header>
+      <ion-list-header>アプリのご意見・ご要望などを承ります</ion-list-header>
       <ion-item>
         <ion-textarea placeholder="" (ionChange)="content = $event.detail.value"></ion-textarea>
       </ion-item>
