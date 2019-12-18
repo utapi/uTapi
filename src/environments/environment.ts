@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyA9DxZvRyOyu9rJrQit7c_yzCv5yM-eT4g",
-    authDomain: "test-utapi.firebaseapp.com",
-    databaseURL: "https://test-utapi.firebaseio.com",
-    projectId: "test-utapi",
-    storageBucket: "test-utapi.appspot.com",
-    messagingSenderId: "928869016987",
-    appId: "1:928869016987:web:0dd10b99b8bcb5a5a22d3e",
-    measurementId: "G-BBBR24Z5KZ"
+    apiKey: "AIzaSyD-gz-RR3MGB5AxTfkQE13AT-zShdU53c4",
+    authDomain: "u-tapi.firebaseapp.com",
+    databaseURL: "https://u-tapi.firebaseio.com",
+    projectId: "u-tapi",
+    storageBucket: "u-tapi.appspot.com",
+    messagingSenderId: "719148309778",
+    appId: "1:719148309778:web:65e4ea0da38a4269f7e7cb",
+    measurementId: "G-662K8JMBYN"
   }
 };
 

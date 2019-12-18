@@ -32,11 +32,11 @@ export class ProductListComponent implements OnInit {
     await this.loading.present();
 
     this.systemService.getUserID().subscribe(user => {
+      if (!user) return
       this.userID = user.uid
       this.getProductClass();
       this.getTotalPrice()
       this.getTotalNumber()
-
     })
   }
 
