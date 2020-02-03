@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SystemService } from '../system.service';
-import { ShoppingCart } from '../types';
+import { ShoppingCart, AddressInfo, CreditInfo } from '../types';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cart',
@@ -17,8 +18,25 @@ export class CartPage implements OnInit {
   payMethod: String = "現金"
   toShopMemo: String = ""
   userID
+  addressShow = true
+  addressInfo = {
+    fullName: "",
+    postalCode: "",
+    prefectures: "",
+    city: "",
+    building: "",
+    phoneNumber: "",
+  }
+  creditInfo = {
+    cardHolder: "",
+    cardNumber: "",
+    expirationYear: "",
+    expirationMonth: "",
+  }
 
-  constructor(private router: Router,
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
     private systemService: SystemService
   ) {
 
@@ -57,12 +75,60 @@ export class CartPage implements OnInit {
     this.totalNumber = this.systemService.getTotalNumber()
   }
 
-  toOrderComplete() {
+  async toOrderComplete() {
+    if (this.receiveMethod == '配送') {
+      if (
+        !this.addressInfo.fullName
+        || !this.addressInfo.postalCode
+        || !this.addressInfo.prefectures
+        || !this.addressInfo.city
+        || !this.addressInfo.building
+        || !this.addressInfo.phoneNumber
+      ) {
+        const alert = await this.alertController.create({
+          header: '受け渡し場所を入力されていません',
+          message: '受け渡し場所を入力してください',
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {}
+            }
+          ]
+        });
+        await alert.present();
+        return;
+      }
+    }
+
+    if (this.payMethod == 'クレジットカード') {
+      if (
+        !this.creditInfo.cardHolder
+        || !this.creditInfo.cardNumber
+        || !this.creditInfo.expirationYear
+        || !this.creditInfo.expirationMonth
+      ) {
+        const alert = await this.alertController.create({
+          header: 'カード情報を入力されていません',
+          message: 'カード情報を入力してください',
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {}
+            }
+          ]
+        });
+        await alert.present();
+        return;
+      }
+    }
+
     let orderDetail = {
       receiveMethod: this.receiveMethod,
       payMethod: this.payMethod,
       toShopMemo: this.toShopMemo,
-      userID: this.userID
+      userID: this.userID,
+      addressInfo: this.addressInfo,
+      creditInfo: this.creditInfo
     }
     this.systemService.saveOrder(orderDetail)
     this.router.navigate(['/tabs/tab1/order-complete'])

@@ -12,6 +12,7 @@
 <ion-content>
   <ion-list>
     <ion-list-header>商品の受取</ion-list-header>
+
     <ion-item>
       <ion-segment (ionChange)="receiveMethod = $event.detail.value">
         <ion-segment-button value="店舗受取" checked>
@@ -24,6 +25,34 @@
         </ion-segment-button>
       </ion-segment>
     </ion-item>
+
+    <div *ngIf="receiveMethod == '配送'">
+      <ion-list-header>受け渡し場所を入力してください</ion-list-header>
+      <ion-item>
+        <ion-label>氏名</ion-label>
+        <ion-input (ionChange)="addressInfo.fullName = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>郵便番号</ion-label>
+        <ion-input (ionChange)="addressInfo.postalCode = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>都道府県</ion-label>
+        <ion-input (ionChange)="addressInfo.prefectures = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>市区町村・番地</ion-label>
+        <ion-input (ionChange)="addressInfo.city = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>建物・マンション名以降</ion-label>
+        <ion-input (ionChange)="addressInfo.building = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>電話番号</ion-label>
+        <ion-input (ionChange)="addressInfo.phoneNumber = $event.detail.value"></ion-input>
+      </ion-item>
+    </div>
 
     <ion-list-header>
       商品明細
@@ -47,16 +76,31 @@
           <ion-icon name="wallet"></ion-icon>
           <ion-label>現金</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="PayPay">
-          <ion-label>PayPay</ion-label>
-          <ion-icon name="globe"></ion-icon>
-        </ion-segment-button>
         <ion-segment-button value="クレジットカード">
           <ion-label>クレジットカード</ion-label>
           <ion-icon name="card"></ion-icon>
         </ion-segment-button>
       </ion-segment>
     </ion-item>
+
+    
+    <div *ngIf="payMethod == 'クレジットカード'">
+      <ion-list-header>カード情報を入力してください</ion-list-header>
+      <ion-item>
+        <ion-label>カード名義人</ion-label>
+        <ion-input (ionChange)="creditInfo.cardHolder = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>カード番号</ion-label>
+        <ion-input (ionChange)="creditInfo.cardNumber = $event.detail.value"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>有効期限</ion-label>
+        <ion-input (ionChange)="creditInfo.expirationYear = $event.detail.value"></ion-input>年
+        <ion-input (ionChange)="creditInfo.expirationMonth = $event.detail.value"></ion-input>月
+      </ion-item>
+    </div>
+
 
     <ion-list-header>店舗へメッセージ</ion-list-header>
     <ion-item>

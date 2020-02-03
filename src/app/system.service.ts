@@ -151,6 +151,8 @@ export class SystemService {
       orderStatus: "準備中",
       productList: productList,
       timestamp: firestore.FieldValue.serverTimestamp(),
+      addressInfo: orderDetail.addressInfo,
+      creditInfo: orderDetail.creditInfo
     }
     orderDetailDoc.set(this.orderDetail)
 

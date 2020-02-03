@@ -62,12 +62,40 @@
         <h2>{{ orderDetail.receiveMethod }}</h2>
       </ion-label>
     </ion-item>
+    
+    <div *ngIf="orderDetail.receiveMethod == '配送'">
+    <ion-item>
+      <ion-label>
+        <h3>受け渡し場所</h3>
+        <h2>{{ orderDetail.addressInfo.fullName }}</h2>
+        <h2>{{ orderDetail.addressInfo.postalCode }}</h2>
+        <h2>{{ orderDetail.addressInfo.prefectures }}</h2>
+        <h2>{{ orderDetail.addressInfo.city }}</h2>
+        <h2>{{ orderDetail.addressInfo.building }}</h2>
+        <h2>{{ orderDetail.addressInfo.phoneNumber }}</h2>
+      </ion-label>
+    </ion-item>
+  </div>
+    
+
     <ion-item>
       <ion-label>
         <h3>お支払方法</h3>
         <h2>{{ orderDetail.payMethod }}</h2>
       </ion-label>
     </ion-item>
+
+    <div *ngIf="orderDetail.payMethod == 'クレジットカード'">
+    <ion-item>
+      <ion-label>
+        <h3>カード情報</h3>
+        <h2>{{ orderDetail.creditInfo.cardHolder }}</h2>
+        <h2>{{ orderDetail.creditInfo.cardNumber }}</h2>
+        <h2>{{ orderDetail.creditInfo.expirationYear }} 年 {{ orderDetail.creditInfo.city }} 月</h2>
+      </ion-label>
+    </ion-item>
+  </div>
+
   </ion-list>
 
 

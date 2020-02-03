@@ -26,3 +26,26 @@ export class ShoppingCart {
         Object.assign(this, init);
     }
 }
+
+
+export class AddressInfo {
+    fullName: String
+    postalCode: String
+    prefectures: String
+    city: String
+    building: String
+    phoneNumber: String
+    constructor(init?: Partial<AddressInfo>) {
+        Object.assign(this, init);
+    }
+}
+
+export class CreditInfo {
+    cardHolder: String
+    cardNumber: String
+    expirationYear: String
+    expirationMonth: String
+    constructor(init?: Partial<CreditInfo>) {
+        Object.assign(this, init);
+    }
+}

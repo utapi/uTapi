@@ -16,3 +16,8 @@ ionic serve
 ```
 ionic build
 ```
+
+## Deploy
+```
+firebase deploy
+```
