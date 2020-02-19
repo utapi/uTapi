@@ -32,6 +32,7 @@ export class CartPage implements OnInit {
     cardNumber: "",
     expirationYear: "",
     expirationMonth: "",
+    securityCode: "",
   }
 
   constructor(
@@ -106,6 +107,7 @@ export class CartPage implements OnInit {
         || !this.creditInfo.cardNumber
         || !this.creditInfo.expirationYear
         || !this.creditInfo.expirationMonth
+        || !this.creditInfo.securityCode
       ) {
         const alert = await this.alertController.create({
           header: 'カード情報を入力されていません',

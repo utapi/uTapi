@@ -96,9 +96,22 @@
       </ion-item>
       <ion-item>
         <ion-label>有効期限</ion-label>
-        <ion-input (ionChange)="creditInfo.expirationYear = $event.detail.value"></ion-input>年
         <ion-input (ionChange)="creditInfo.expirationMonth = $event.detail.value"></ion-input>月
+        <ion-input (ionChange)="creditInfo.expirationYear = $event.detail.value"></ion-input>年
       </ion-item>
+      <ion-item>
+        <ion-label>セキュリティコード</ion-label>
+        <ion-input (ionChange)="creditInfo.securityCode = $event.detail.value" type="password"></ion-input>
+      </ion-item>
+
+      <div style="color: gray;text-align: center;padding: 0 1em;" *ngIf="!isLoading">
+        <small>
+          <p>
+            ※ 展示のため、カードは認証しない上に、セキュリティコードはデータベースに保存しません。
+          </p>
+        </small>
+      </div>
+
     </div>
 
 
