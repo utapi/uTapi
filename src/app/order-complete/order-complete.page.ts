@@ -28,7 +28,7 @@ export class OrderCompletePage implements OnInit {
   getWaitingTime() {
     this.systemService.getWaitingTime(this.orderDetail.orderID).subscribe(
       items => {
-        this.waitingTime = items.length * 2 + "分"
+        this.waitingTime = items.length * 1 + "分"
       }
     )
   }
