@@ -22,5 +22,5 @@ ionic build
 ```
 firebase deploy
 ```
-License
+## License
 This project is licensed under the MIT license, Copyright (c) 2020 Nippon Engineering College CD63-2 Tapioka Team.
